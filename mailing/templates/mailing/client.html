@@ -1,0 +1,25 @@
+{% extends 'mailing/base_page.html' %}
+
+{% block content %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Карточка пользователя</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ object.contact_mail }}</p>
+                            <p class="card-text">{{ object.full_name }}</p>
+                            <p class="card-text">{{ object.comment }}</p>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

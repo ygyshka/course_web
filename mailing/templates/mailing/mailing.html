@@ -1,0 +1,29 @@
+{% extends 'mailing/base_page.html' %}
+
+{% block content %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-4 ">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h3>Карточка рассылки</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Время рассылки: {{ object.time_send }}</p>
+                            <p class="card-text">Переодичность рассылки: {{ object.periodicity }}</p>
+                            <p class="card-text">Статус: {{ object.status_code }}</p>
+                            <p class="card-text">{{ object.client_id }}</p>
+                            <p class="card-text">{{ object.next_send }}</p>
+                            <p class="card-text"></p>
+                            <p class="card-text">{{ object.message_id }}</p>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
