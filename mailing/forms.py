@@ -15,6 +15,7 @@ class ClientForm(MixinForm, forms.ModelForm):
     class Meta:
         model = Clients
         fields = '__all__'
+        exclude = ('user',)
         # fields = ('contact_mail', 'full_name', 'comment')
 
 
@@ -30,3 +31,11 @@ class MailingForm(MixinForm, forms.ModelForm):
     class Meta:
         model = Mailing
         fields = '__all__'
+        exclude = ('user',)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['client_id'].queryset = Clients.objects.filter(user=user)
+        self.fields['message_id'].queryset = Message.objects.filter(user=user)
+

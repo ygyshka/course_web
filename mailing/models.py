@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from mailing import constants
@@ -13,6 +14,7 @@ class Clients(models.Model):
     full_name = models.CharField(max_length=200,
                                  verbose_name='Ф.И.О.')
     comment = models.TextField(verbose_name='коментарий', **constants.NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **constants.NULLABLE)
 
     def __str__(self):
         return f'{self.contact_mail} {self.full_name} {self.comment}'
@@ -35,6 +37,7 @@ class Mailing(models.Model):
     next_send = models.DateField(verbose_name='дата следующей отправки')
 
     message_id = models.ForeignKey('Message', on_delete=models.CASCADE, verbose_name='Сообщения')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **constants.NULLABLE)
 
     def __str__(self):
         return f'{self.time_send} {self.periodicity} {self.status_code}'
@@ -48,6 +51,7 @@ class Message(models.Model):
 
     title = models.CharField(max_length=150, verbose_name='тема письма', **constants.NULLABLE)
     text = models.TextField(verbose_name='тело письма', **constants.NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **constants.NULLABLE)
 
     def __str__(self):
         return f'{self.title} {self.text}'
@@ -66,6 +70,7 @@ class Logs(models.Model):
                                                   # записывать ошибку с ее обозначением, дулать через try\except
                                                   # except Exception as e: status = e мб e.__srt__ (как пример)
     mailings_id = models.ForeignKey('Mailing', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **constants.NULLABLE)
 
     def __str__(self):
         return f'{self. date_time} {self.server_request}'
