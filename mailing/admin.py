@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing.models import Clients, Message
+from mailing.models import Clients, Message, Mailing
 
 
 # Register your models here.
@@ -13,3 +13,9 @@ class ClientsAdmin(admin.ModelAdmin):
 @admin.register(Message)
 class Admin(admin.ModelAdmin):
     list_display = ('id', 'title', 'text')
+
+
+@admin.register(Mailing)
+class MailingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'time_send', 'periodicity', 'status_code', 'next_send')
+

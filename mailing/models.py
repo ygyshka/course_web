@@ -6,7 +6,6 @@ from mailing import constants
 # Create your models here.
 
 
-
 class Clients(models.Model):
 
     contact_mail = models.EmailField(max_length=150,
