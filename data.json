@@ -1,0 +1,97 @@
+[
+  {
+    "model": "mailing.clients",
+    "pk": 1,
+    "fields": {
+      "contact_mail": "est@yandex.ru",
+      "full_name": "Metuy MacConest",
+      "comment": "Person from Canada"
+    }
+  },
+  {
+    "model": "mailing.clients",
+    "pk": 2,
+    "fields": {
+      "contact_mail": "test@gmail.com",
+      "full_name": "Genree Bishop Flower",
+      "comment": "Person from Mexico"
+    }
+  },
+  {
+    "model": "mailing.clients",
+    "pk": 3,
+    "fields": {
+      "contact_mail": "test@mail.ru",
+      "full_name": "Alex Bruno Mackendi",
+      "comment": "Person from america"
+    }
+  },
+  {
+    "model": "mailing.mailing",
+    "pk": 1,
+    "fields": {
+      "time_send": "14:00:00",
+      "periodicity": "Week",
+      "status_code": "Create",
+      "next_send": "2023-10-12",
+      "message_id": 2,
+      "client_id": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailing",
+    "pk": 2,
+    "fields": {
+      "time_send": "14:00:00",
+      "periodicity": "Day",
+      "status_code": "Create",
+      "next_send": "2023-10-12",
+      "message_id": 4,
+      "client_id": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailing",
+    "pk": 3,
+    "fields": {
+      "time_send": "15:00:00",
+      "periodicity": "daily",
+      "status_code": "create",
+      "next_send": "2023-10-12",
+      "message_id": 4,
+      "client_id": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 1,
+    "fields": {
+      "title": "Desition",
+      "text": "arhifgarfvarguyivuboivhbiuvbchcuyargfuyagrfirihvbruiygfyuarliahrvhubvuyagocviudhscvbaushvuagvariobrvbyuvadksjvcnsdvhibabvsdvlkjhfiagv boivuohwifnociaugfdfjkhfhaiuwtyvoawniu"
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 2,
+    "fields": {
+      "title": "Request",
+      "text": "aweufyvbwaefurvcyiacadslvkjabsdvjkghsuyfga uyfasufygasjfbhsdvbfksdbha aSDG FIDYS GFyfg iUFGY ufkdjkfhbdklfbsadlkfjhaioufgygfaeir gaoskdfsdfhgsdkhfsdjfhvsdjcjnsocwuef wfEFUGHWFIB"
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 4,
+    "fields": {
+      "title": "Посещение платформы",
+      "text": "Предлагаем вам в кротчайшие сроки посетить нашу платформу для ознакомления с новыми предложениями!!!!"
+    }
+  }
+]

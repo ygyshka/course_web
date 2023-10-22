@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -7,6 +8,16 @@ from mailing.models import Clients, Message, Mailing
 
 
 # Create your views here.
+
+@login_required(login_url='users/')
+@login_required
+def start_page(request):
+    client_list = Clients.objects.all()
+    conntext = {
+        'client_list': client_list
+    }
+    return render(request, 'mailing/start_page.html', conntext)
+
 
 class ClientsListView(ListView):
     model = Clients

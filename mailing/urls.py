@@ -6,12 +6,14 @@ from mailing.views import (ClientsListView, ClientsCreateView, ClientsDetailView
                            MessageListView, MessageDetailView, MessageCreateView,
                            MessageUpdateView, MessageDeleteView,
                            MailingsListView, MailingDetailView, MailingCreatView,
-                           MailingUpdateView, MailingDeleteView)
+                           MailingUpdateView, MailingDeleteView,
+                           start_page)
 
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path('', ClientsListView.as_view(), name='home'),
+    path('', start_page, name='start_page'),
+    path('clients/', ClientsListView.as_view(), name='home'),
     path('create/', ClientsCreateView.as_view(), name='create'),
     path('update/<int:pk>', ClientsUpdateView.as_view(), name='update'),
     path('client/<int:pk>', ClientsDetailView.as_view(), name='client'),
