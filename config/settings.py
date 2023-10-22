@@ -124,11 +124,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+USE_TZ = True
+TIME_ZONE = os.getenv('TIME_ZONE')
 
 USE_I18N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -170,3 +169,4 @@ CACHES = {
         "LOCATION": os.getenv('CACHE_LOCATION'),
     }
 }
+

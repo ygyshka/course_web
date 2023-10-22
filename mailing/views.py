@@ -10,8 +10,8 @@ from mailing.models import Clients, Message, Mailing, Logs
 
 # Create your views here.
 
-@login_required(login_url='users/')
-@login_required
+# @login_required(login_url='users/')
+# @login_required
 def start_page(request):
     client_list = Clients.objects.all()
     conntext = {
@@ -58,6 +58,14 @@ class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Clients
     form_class = ClientForm
     success_url = reverse_lazy('mailing:home')
+
+    # def form_valid(self, form):
+    #
+    #     self.object = form.save()
+    #     self.object.user = self.request.user
+    #     self.object.save()
+    #
+    #     return super().form_valid(form)
 
 
 class ClientsDeleteView(LoginRequiredMixin, DeleteView):
@@ -143,6 +151,15 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing:mailing_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
