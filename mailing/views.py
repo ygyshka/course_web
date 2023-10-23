@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
+import random
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from blog.models import Blog
 from mailing.forms import ClientForm, MessageForm, MailingForm
 from mailing.models import Clients, Message, Mailing, Logs
 
@@ -12,11 +14,25 @@ from mailing.models import Clients, Message, Mailing, Logs
 
 # @login_required(login_url='users/')
 # @login_required
+# def start_page(request):
+#     client_list = Clients.objects.all()
+#     conntext = {
+#         'client_list': client_list,
+#         'title': 'Список клиентов'
+#     }
+#     return render(request, 'mailing/start_page.html', conntext)
 def start_page(request):
-    client_list = Clients.objects.all()
+    mailing_count = Mailing.objects.all().count()
+    active_mailing = Mailing.objects.filter(status_code='active').count()
+    clients_count = Clients.objects.all().count()
+    random_blogs = Blog.objects.all()
     conntext = {
-        'client_list': client_list,
-        'title': 'Список клиентов'
+        'count': mailing_count,
+        'title': 'Приложение Рассылок',
+        'active_mailing': active_mailing,
+        'clients_count': clients_count,
+        'articles': random.sample(list(random_blogs), 3)
+
     }
     return render(request, 'mailing/start_page.html', conntext)
 
