@@ -6,7 +6,7 @@ from mailing.models import Clients, Message, Mailing
 # Register your models here.
 @admin.register(Clients)
 class ClientsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'full_name', 'contact_mail', 'comment')
+    list_display = ('id', 'full_name', 'contact_mail', 'comment', 'user')
     search_fields = ('full_name', 'contact_mail')
 
 
