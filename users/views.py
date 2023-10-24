@@ -1,18 +1,18 @@
 from django.conf import settings
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils.crypto import get_random_string
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.contrib.auth.tokens import (default_token_generator
                                         as token_generator)
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import UpdateView, ListView
 
 from users.forms import MyAuthenticationForm, UserForm, ProfileUserForm
 from users.models import User
@@ -117,3 +117,33 @@ def generate_new_password(request):
     request.user.save()
 
     return redirect(reverse('mailing:start_page'))
+
+
+class UserListView(ListView):
+
+    model = User
+    template_name = 'users/user_list.html'
+    extra_context = {
+        'title': 'Список пользователей'
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = get_user_model().objects.all()
+        return context
+
+
+def activate_user(request, pk):
+    User = get_user_model()
+    user = get_object_or_404(User, pk=pk)
+    user.is_active = True
+    user.save()
+    return redirect('users:user_list')
+
+
+def deactivate_user(request, pk):
+    User = get_user_model()
+    user = get_object_or_404(User, pk=pk)
+    user.is_active = False
+    user.save()
+    return redirect('users:user_list')

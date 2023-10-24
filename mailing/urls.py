@@ -8,13 +8,14 @@ from mailing.views import (ClientsListView, ClientsCreateView, ClientsDetailView
                            MessageUpdateView, MessageDeleteView,
                            MailingsListView, MailingDetailView, MailingCreatView,
                            MailingUpdateView, MailingDeleteView,
-                           start_page)
+                           start_page,
+                           LogsListView)
 
 app_name = MailingConfig.name
 
 urlpatterns = [
     path('', start_page, name='start_page'),
-    path('clients/', ClientsListView.as_view(), name='home'),
+    path('clients/', ClientsListView.as_view(), name='client_list'),
     path('create/', ClientsCreateView.as_view(), name='create'),
     path('update/<int:pk>', ClientsUpdateView.as_view(), name='update'),
     path('client/<int:pk>', ClientsDetailView.as_view(), name='client'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('mailings_list/updeate/<int:pk>', MailingUpdateView.as_view(), name='mailing_form'),
     path('message_list/mailing/<int:pk>', MailingDetailView.as_view(), name='mailing'),
 
+    path('logs/', LogsListView.as_view(), name='logs_list')
 ]
 
 start_apscheduler()

@@ -39,7 +39,7 @@ def start_page(request):
 
 class ClientsListView(LoginRequiredMixin, ListView):
     model = Clients
-    template_name = 'mailing/home.html'
+    template_name = 'mailing/client_list.html'
     extra_context = {
         'title': 'Список клиентов'
     }

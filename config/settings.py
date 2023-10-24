@@ -125,8 +125,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-USE_TZ = True
-TIME_ZONE = 'UTC'  #os.getenv('TIME_ZONE')
+USE_TZ = False
+TIME_ZONE = os.getenv('TIME_ZONE')
 
 USE_I18N = True
 
