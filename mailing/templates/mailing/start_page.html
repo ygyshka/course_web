@@ -12,13 +12,17 @@
 {#                                <h2>Приложение Рассылок</h2>#}
                             </div>
                             <div class="card-body">
-                                <p class="card-text">Общее число рассылок: {{ count }}</p>
-                                <p class="card-text">Количество активных рассылок: {{ active_mailing }}</p>
-                                <p class="card-text">Количество уникальных клиентов для рассылок: {{ clients_count }}</p>
-                                <p class="card-text">3 случайные статьи из блога:</p>
+                                <p class="card-text"><b>Общее число рассылок:</b> {{ count }}</p>
+                                <p class="card-text"><b>Количество активных рассылок:</b> {{ active_mailing }}</p>
+                                <p class="card-text" ><b>Количество уникальных клиентов для рассылок:</b> {{ clients_count }}</p>
+                                <p class="card-text" style="font-weight: bold;">3 случайные статьи из блога:</p>
+                            {% if articles is not str %}
                                 {% for item in articles %}
-                                    <p class="card-text">{{ item }}</p>
+                                    <p class="card-text">{{ item.title }}</p>
                                 {% endfor %}
+                            {% else %}
+                                <p class="card-text">{{ articles }}</p>
+                            {% endif %}
 {#                                <p class="card-text">{{ object.contact_mail }}</p>#}
 {#                                <p class="card-text">{{ object.full_name }}</p>#}
 {#                                <p class="card-text">{{ object.comment|truncatechars:50 }}</p>#}
