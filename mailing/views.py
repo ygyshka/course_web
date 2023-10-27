@@ -10,7 +10,6 @@ from blog.models import Blog
 from mailing import constants
 from mailing.forms import ClientForm, MessageForm, MailingForm
 from mailing.models import Clients, Message, Mailing, Logs
-from mailing.services import get_queryset, check_perm
 
 
 # Create your views here.
