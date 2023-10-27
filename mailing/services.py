@@ -16,9 +16,6 @@ def send_mailing(mailing):
     from_email = os.getenv('EMAIL_HOST_USER')
     recipient_list = [client.contact_mail for client in mailing.client_id.all()]
     for recipient in recipient_list:
-        # print(recipient)
-        # print(subject)
-        # print(message)
         response = send_mail(subject, message, from_email, [recipient])
         if response == 1:
             status = 'Отправленно'

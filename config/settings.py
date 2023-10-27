@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'users',
     'blog',
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
