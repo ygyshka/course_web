@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from blog.models import Blog
+from mailing import constants
 from mailing.forms import ClientForm, MessageForm, MailingForm
 from mailing.models import Clients, Message, Mailing, Logs
 
@@ -20,14 +21,23 @@ def start_page(request):
     active_mailing = Mailing.objects.filter(status_code='active').count()
     clients_count = Clients.objects.all().count()
     random_blogs = Blog.objects.all()
-    conntext = {
-        'count': mailing_count,
-        'title': 'Приложение Рассылок',
-        'active_mailing': active_mailing,
-        'clients_count': clients_count,
-        'articles': random.sample(list(random_blogs), 3)
+    try:
+        conntext = {
+            'count': mailing_count,
+            'title': 'Приложение Рассылок',
+            'active_mailing': active_mailing,
+            'clients_count': clients_count,
+            'articles': random.sample(list(random_blogs), 3)
+        }
+    except Exception as e:
+        conntext = {
+            'count': mailing_count,
+            'title': 'Приложение Рассылок',
+            'active_mailing': active_mailing,
+            'clients_count': clients_count,
+            'articles': f'{constants.EMPTY_BLOG}'
+        }
 
-    }
     return render(request, 'mailing/start_page.html', conntext)
 
 
