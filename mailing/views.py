@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 import random
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -9,6 +10,7 @@ from blog.models import Blog
 from mailing import constants
 from mailing.forms import ClientForm, MessageForm, MailingForm
 from mailing.models import Clients, Message, Mailing, Logs
+from mailing.services import get_queryset, check_perm
 
 
 # Create your views here.
@@ -29,7 +31,7 @@ def start_page(request):
             'clients_count': clients_count,
             'articles': random.sample(list(random_blogs), 3)
         }
-    except Exception as e:
+    except ValueError:
         conntext = {
             'count': mailing_count,
             'title': 'Приложение Рассылок',
@@ -47,7 +49,7 @@ class ClientsListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Список клиентов'
     }
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     def get_queryset(self):
         query = super().get_queryset()
         query = query.filter(user=self.request.user)
@@ -73,11 +75,31 @@ class ClientsDetailView(LoginRequiredMixin, DetailView):
     model = Clients
     template_name = 'mailing/client.html'
 
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
+
 
 class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Clients
     form_class = ClientForm
     success_url = reverse_lazy('mailing:client_list')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
 
     # def form_valid(self, form):
     #
@@ -92,6 +114,16 @@ class ClientsDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Clients
     success_url = reverse_lazy('mailing:home')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
 
 
 class MessageListView(LoginRequiredMixin, ListView):
@@ -126,15 +158,45 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView):
     form_class = MessageForm
     success_url = reverse_lazy('mailing:message_list')
 
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
+
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
     template_name = 'mailing/message.html'
 
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
+
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     success_url = reverse_lazy('mailing:message_list')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
 
 
 class MailingsListView(LoginRequiredMixin, ListView):
@@ -154,6 +216,16 @@ class MailingsListView(LoginRequiredMixin, ListView):
 class MailingDetailView(LoginRequiredMixin, DetailView):
     model = Mailing
     template_name = 'mailing/mailing.html'
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
 
 
 class MailingCreatView(LoginRequiredMixin, CreateView):
@@ -185,10 +257,30 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
         kwargs['user'] = self.request.user
         return kwargs
 
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
+
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailing
     success_url = reverse_lazy('mailing:mailing_confirm_delete')
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        if not self.request.user.is_staff:
+            raise PermissionDenied('Доступ запрещен.\n'
+                                   'Для получения подробной информацции обратитесь к администратору сайта.')
+        else:
+            query = query.filter(user=self.request.user)
+
+        return query
 
 
 class LogsListView(ListView):
