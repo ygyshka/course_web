@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from mailing.apps import MailingConfig
 from mailing.services import start_apscheduler
@@ -14,7 +15,7 @@ from mailing.views import (ClientsListView, ClientsCreateView, ClientsDetailView
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path('', start_page, name='start_page'),
+    path('', cache_page(60)(start_page), name='start_page'),
     path('clients/', ClientsListView.as_view(), name='client_list'),
     path('create/', ClientsCreateView.as_view(), name='create'),
     path('update/<int:pk>', ClientsUpdateView.as_view(), name='update'),
