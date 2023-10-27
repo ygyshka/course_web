@@ -14,13 +14,7 @@ from mailing.models import Clients, Message, Mailing, Logs
 
 # @login_required(login_url='users/')
 # @login_required
-# def start_page(request):
-#     client_list = Clients.objects.all()
-#     conntext = {
-#         'client_list': client_list,
-#         'title': 'Список клиентов'
-#     }
-#     return render(request, 'mailing/start_page.html', conntext)
+
 def start_page(request):
     mailing_count = Mailing.objects.all().count()
     active_mailing = Mailing.objects.filter(status_code='active').count()
@@ -54,7 +48,7 @@ class ClientsListView(LoginRequiredMixin, ListView):
 class ClientsCreateView(LoginRequiredMixin, CreateView):
     model = Clients
     form_class = ClientForm
-    success_url = reverse_lazy('mailing:home')
+    success_url = reverse_lazy('mailing:client_list')
 
     def form_valid(self, form):
 
@@ -73,7 +67,7 @@ class ClientsDetailView(LoginRequiredMixin, DetailView):
 class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Clients
     form_class = ClientForm
-    success_url = reverse_lazy('mailing:home')
+    success_url = reverse_lazy('mailing:client_list')
 
     # def form_valid(self, form):
     #
@@ -110,7 +104,11 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('mailing:message_list')
 
     def form_valid(self, form):
-        pass
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
@@ -179,7 +177,8 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
-    pass
+    model = Mailing
+    success_url = reverse_lazy('mailing:mailing_confirm_delete')
 
 
 class LogsListView(ListView):

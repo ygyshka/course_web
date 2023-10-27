@@ -24,6 +24,7 @@ class MessageForm(MixinForm, forms.ModelForm):
     class Meta:
         model = Message
         fields = '__all__'
+        exclude = ('user',)
 
 
 class MailingForm(MixinForm, forms.ModelForm):
