@@ -77,11 +77,7 @@ class ClientsDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -93,11 +89,7 @@ class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
     # def form_valid(self, form):
@@ -117,11 +109,7 @@ class ClientsDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -160,11 +148,7 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -175,11 +159,7 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -190,11 +170,7 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -219,11 +195,7 @@ class MailingDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -259,11 +231,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
@@ -274,11 +242,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         query = super().get_queryset()
         if not self.request.user.is_staff:
-            raise PermissionDenied('Доступ запрещен.\n'
-                                   'Для получения подробной информацции обратитесь к администратору сайта.')
-        else:
             query = query.filter(user=self.request.user)
-
         return query
 
 
